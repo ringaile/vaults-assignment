@@ -19,6 +19,7 @@ contract Vault1 {
     }
 
     function deposit(uint256 _amount) public {
+        amount += _amount;
         token.transferFrom(msg.sender, address(this), _amount);
         emit Deposited(msg.sender, address(token), _amount);
 
@@ -26,6 +27,7 @@ contract Vault1 {
     
     function withdraw(uint256 _amount) public {
         require(_amount <= amount, "Contract balance is too low");
+        amount -= _amount;
         token.approve(msg.sender, _amount);
         require(token.transfer(msg.sender, _amount));
         emit Withdrawn(msg.sender, address(token), _amount);
